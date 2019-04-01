@@ -1,0 +1,276 @@
+<html lang="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <title>动态条形图</title>
+
+    <link rel="stylesheet" media="(min-width: 1000px)" href="css/myChart.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?7b3bd35c5d65ef7a228c0b54aa829cde";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<style>
+	.abc{
+		width: 200px;height:60px;line-height:60px;border:2px solid #C7254E;text-align: center;border-radius: 10px;margin: 10px 30px;
+	}
+	.bbb{
+		width:90%;margin-left:5%;height:240px;color:#FFFFFF;font-size: 36px;text-align: center;border:2px solid red;
+		border-radius: 30px;margin-bottom: 20px;
+	}
+	
+	/*.animated{
+		animation-play-state:paused;
+		-webkit-animation-play-state:paused; 
+		-moz-animation-play-state:paused;
+		-o-animation-play-state:paused;
+	}*/
+	body{
+		background: #013754;
+		background-repeat:no-repeat; 
+		background-size:100% 100%;
+		-moz-background-size:100% 100%;
+	}
+	
+	.rotate{
+		animation: myrotate 5s linear 0s infinite ;
+		/* Firefox: */
+		-moz-animation: myrotate 5s linear 0s infinite;
+		/* Safari 和 Chrome: */
+		-webkit-animation: myrotate 5s linear 0s infinite;
+		/* Opera: */
+		-o-animation: myrotate 5s linear 0s infinite;
+	}
+	@-webkit-keyframes myrotate{from{-webkit-transform: rotate(0deg)}
+	    to{-webkit-transform: rotate(360deg)}
+	}
+	@-moz-keyframes myrotate{from{-moz-transform: rotate(0deg)}
+	    to{-moz-transform: rotate(359deg)}
+	}
+	@-o-keyframes myrotate{from{-o-transform: rotate(0deg)}
+	    to{-o-transform: rotate(359deg)}
+	}
+	@keyframes myrotate{from{transform: rotate(0deg)}
+	    to{transform: rotate(359deg)}
+	}
+</style>
+<body >
+	<div id="mainContainer" style="position:absolute;width:100%;">
+		<div id="aaa" style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div class="rightContainer" style="width:100%;height: 100%;float: left;">
+				<div id="myChart" style="position:relative;width:100%;height:93%;">					
+				</div>
+				<div id="mute_container" style="position:absolute;width:100px;bottom:140px;right:30px;color:#fff;height: 100px;">
+					<img id="muteBtn" class="rotate animated" src="images/music.png" style="width: 100px;"/>
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+	<div id="maskContainer" style="position:absolute;top:0px;width:100%;min-height: 100%;background-color: rgba(0,0,0,0.9);z-index: 101;display: none;overflow: scroll;">
+		<div  style="position:absolute;top:0px;width:100%;min-height: 100%;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div style="margin: 20px auto;width:100%;position: relative;">
+				<a href="#" style="top:34%;left: 15%;width: 25%;height: 10%;display: block;position:absolute ;" id="shareBtn"></a>
+				<a href="#" style="top:34%;left: 50%;width: 25%;height: 10%;display: block;position:absolute ;" id="reviewBtn"></a>
+				<!--div id="exContainer" style="">
+					<div class="bbb">
+						<div style="height: 240px;display: flex;justify-content: center;align-items: center;">
+							<div id="zongjie" style="color: #fff;font-size: 50px;width: 90%;">
+								在2006年4月，买入三安光电并<span style="font-weight: bold;">持有至今</span>，可获取165倍收益
+							</div>
+						</div>
+					</div>
+					<div style="width:80%;color:#FFFFFF;font-size: 40px;margin-bottom: 20px;text-align: center;margin-left: 10%;">
+						不要 "炒" 股,你要买价值,永远不要卖。
+					</div>
+					<div style="width:80%;color:#FFFFFF;font-size: 40px;margin-bottom: 30px;text-align: right;">
+						--沃伦.巴菲特
+					</div>
+					<div style="width: 80%;height: 2px;background-color: #FFF;margin-left: 10%;margin-bottom: 30px;"></div>
+				</div>			
+				<div style="color:#FFFFFF;font-size: 30px;margin: 10px 0px 5px 0px;display: flex;justify-content: center;align-items: center;">
+					<div class="abc" id="shareBtn">分享一下</div>
+					<div class="abc" id="reviewBtn">再看一次</div>
+				</div>
+				<div class="desc" style="color:#FFFFFF;font-size: 30px;margin: 5px auto;text-align: center;">
+					长按识别-关注万得股票公众号</br>看更多A股数据
+				</div>
+				<div style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+					<img id="qrcode" src="images/qrcode.jpg" style="width: 30%;min-width: 300px;"/>
+				</div>
+				<div class="desc" style="color:#FFFFFF;font-size: 30px;margin-top: 10px;text-align: center;">
+					用万得炒股，与机构同行
+				</div-->
+			</div>		
+		</div>
+		<div id="closeBtn" style="position:fixed;z-index: 102;width: 80px;height: 80px;top:0px;right:0px;color: #FFFFFF;font-size: 80px;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">x</div>
+	</div>
+	<div id="maskContainer2" style="position:absolute;top:0px;width:100%;height: 100%;background-color: rgba(0,0,0,0.95);z-index: 102;display: none;">
+		<div  style="position:absolute;top:0px;width:100%;height: 100%;display: flex;display: -webkit-flex;justify-content: flex-end;align-items: flex-start;">
+			<img src="images/trend.png" style="width: 30%;min-width: 300px;margin-top:-50px"/>
+		</div>		
+		<div  style="position:absolute;top:0px;width:100%;height: 100%;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div>
+				<div style="color:#FFFFFF;font-size: 30px;margin-top: 10px;text-align: center;font-size: 50px;">
+					请点击右上角 "..." 发送给朋友
+				</div>
+			</div>		
+		</div>
+	</div>
+	<div id="loading_mask" style="position:absolute;top:0px;width:100%;height: 100%;background-color: rgba(0,0,0,0.7);z-index: 103;">
+ 		<div style="position:absolute;top:0px;width:100%;height: 100%;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+ 			<div>
+				<div style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+					<img id="loadingImg" src="images/loading.gif" style="width: 10%;min-width:100px;"/>
+				</div>
+				<div  style="width:100%;display: flex;display: -webkit-flex;justify-content: center;align-items: center;margin-top:50px">
+					<div>
+						<div style="color:#FFFFFF;font-size: 30px;margin-top: 10px;text-align: center;font-size: 50px;">努力加载中...</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<audio id="bgmusic" autoplay="false" loop="true" preload="auto" src="images/bgmusic.mp3" style="display: none;"></audio>-->
+</body>
+</html>
+<script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/wxshare.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/createPersonalChart.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+	redener();
+	
+//    var audio = $('#bgmusic')[0];
+//	$('#bgmusic').on("loadedmetadata",function() {
+//		audio.play();
+//		
+//	});
+//	audio.load();	
+	MyChart.createBarChart('');
+	 	
+	var ua = window.navigator.userAgent.toLowerCase(); 
+	if(ua.match(/MicroMessenger/i) == 'micromessenger'){ 
+		document.addEventListener("WeixinJSBridgeReady", function () {
+	        $("#bgmusic")[0].play();
+	        setwxshare('吹尽狂沙始到金，悉数20年间最具投资价值个股！',"20年股海翻腾，万得股票带你领略 \"价值投资\" 的魅力",location.href.split('#')[0],"https://wmstock.wind.com.cn/strategy/view/common2/img/stock_logo.png");	
+	    }, false);
+	}
+
+	$('#closeBtn').on('click',function(){
+		$('#maskContainer').fadeOut(500);
+	});
+	
+	$('#muteBtn').on('click',function(){
+		var audio = $("#bgmusic")[0];   
+		if($(this).hasClass('animated')){
+			audio.pause();
+			$(this).css({
+				'animation-play-state':'paused',
+				'-webkit-animation-play-state':'paused',
+				'-moz-animation-play-state':'paused',
+				'-o-animation-play-state':'paused'
+			});
+			$(this).removeClass('animated');
+		}else{
+			audio.play();
+			$(this).css({
+				'animation-play-state':'running',
+				'-webkit-animation-play-state':'running',
+				'-moz-animation-play-state':'running',
+				'-o-animation-play-state':'running'
+			});
+			$(this).addClass('animated');
+		}
+	});
+	
+	$('#reviewBtn').on('click',function(){
+		$('#maskContainer').fadeOut(500);
+		var audio = $("#bgmusic")[0];   
+		audio.currentTime = 0;
+		MyChart.createBarChart('');
+	})
+	$('#shareBtn').on('click',function(){
+		$('#maskContainer2').css('display','block');
+	})
+	$('#maskContainer2').on('click',function(){
+		$('#maskContainer2').css('display','none');
+	})	
+})
+
+$(window).resize(function(){
+//	window.location.reload();
+	redener();
+});
+
+function redener(){		
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
+	if(windowWidth>windowHeight){
+		$('.rightContainer').css({
+			'width':windowWidth+'px',
+			'height':windowWidth*9/16+'px',
+			'maxHeight':windowHeight+'px'
+		});
+		$('#myChart').css({
+			'height':'93%'
+		});
+		$('#bottomInfo').css({
+			'bottom':'0px',
+			'height':'40px',
+			'fontSize':'24px'
+		});
+		$('#mute_container').css({
+			'bottom':'80px',
+			'right':'10px'
+		});
+		$('#muteBtn').css({
+			'width':'80px'
+		});
+	}else{
+		$('.rightContainer').css({
+			'width':windowWidth+'px',
+			'height':windowHeight+'px',
+			'maxHeight':windowHeight+'px'
+		});
+		$('.desc').css({
+			'fontSize':'40px',
+			'margin':'40px auto 40px auto'
+		});
+		$('#qrcode').css({
+			'width':'40%'
+		});
+		$('#shareBtn').css({
+			'width':'360px',
+			'height':'120px',
+			'lineHeight':'120px',
+			'fontSize':'50px'
+		});
+		$('#reviewBtn').css({
+			'width':'360px',
+			'height':'120px',
+			'lineHeight':'120px',
+			'fontSize':'50px'
+		});	
+	}
+
+	$('#aaa').css({
+		'width':$(window).width()+'px',
+		'height':$(window).height()+'px'
+	}) 
+}
+window.addEventListener("orientationchange",function(){  
+//	window.location.reload();
+	redener();
+	MyChart.createBarChart('');
+});
+
+</script>

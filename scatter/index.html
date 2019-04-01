@@ -1,0 +1,121 @@
+<html lang="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <title>动态气泡图</title>
+
+    <link rel="stylesheet" media="(min-width: 1000px)" href="css/myChart.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>-->
+	<!--<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="js/echarts_all.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="js/wxshare.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/createPersonalChart.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="overflow:hidden;background:#404a59">
+	<div id="mainContainer" style="position:absolute;width:100%;">
+		<div id="aaa" style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div class="rightContainer" style="width:100%;height: 100%;float: left;">
+				<div id="myChart" style="position:relative;width:100%;height:100%;">
+					
+				</div>
+				<div id="intervalMask" style="display:none;position:relative;width:100%;height:100%;top:-100%;left: 0px;z-index: 999;background-color: rgba(0,0,0,0.7);">
+					<div style="display: flex;display: -webkit-flex;justify-content: center;height: 100%;width: 100%;">
+						<div id="intervalText" style="font-size: 30px;color: #fff;display: flex;display: -webkit-flex;justify-content: center;align-items: center;text-align: center;">
+							<p>
+								<span style="color: #ffaa00;">前方高能!!!</span></br></br>
+								基金市值大规模增长
+							</p>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="maskContainer" style="position:absolute;top:0px;width:100%;height: 100%;background-color: rgba(0,0,0,0.7);z-index: 101;display: none;">
+		<div  style="position:absolute;top:0px;width:100%;height: 100%;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div>
+				<div style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+					<img src="images/qrcode.jpg" style="width: 30%;min-width: 300px;"/>
+				</div>
+				<div style="color:#FFFFFF;font-size: 30px;margin-top: 40px;text-align: center;">
+					关注 "<span style="color: orange;">万得基金</span>" 公众号</br>定制<span style="color: orange;">任意</span>基金公司的帝国板块
+				</div>
+			</div>		
+		</div>
+		<div id="closeBtn" style="position:absolute;z-index: 102;width: 80px;height: 80px;top:0px;right:0px;color: #FFFFFF;font-size: 80px;display: flex;display: -webkit-flex;justify-content: center;align-items: center;">x</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+function getUrlParam(name, url) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //构造一个含有目标参数的正则表达式对象
+    var param = "";
+    if (!url)
+        param = window.location.search.substr(1);
+    else {
+        var index = url.indexOf("?");
+        var param = url;
+        if (index >= 0 && index < url.length) {
+            param = url.substr(ur.indexOf("?") + 1);
+        }
+    }
+    var r = param.match(reg);  //匹配目标参数
+    if (r != null) return r[2]; return null; //返回参数值
+}
+function isPositiveNum(s){//是否为正整数  
+    var re = /^[0-9]*[1-9][0-9]*$/ ;  
+    return re.test(s)  
+} 
+
+$(document).ready(function(){
+	$('.rightContainer').css({
+		'width':$(window).width()+'px',
+		'height':$(window).width()*9/16+'px',
+		'maxHeight':$(window).height()+'px'
+	});
+	$('#aaa').css({
+		'width':$(window).width()+'px',
+		'height':$(window).height()+'px'
+	})
+	
+	if(getUrlParam('fundname')){
+		MyChart.createScatterChart_JSON(getUrlParam('fundname'));
+	}else{
+		MyChart.createScatterChart_JSON('');
+	}
+	$('#closeBtn').on('click',function(){
+		$('#maskContainer').css('display','none');
+	});
+	
+	var a;
+	if(decodeURI(getUrlParam('fundname')))
+	{
+		a = "一分钟看遍"+decodeURI(getUrlParam('fundname'))+"基金发展历程，基金公司帝国板块等你探索。"
+	}else{
+		a = "一分钟看遍基金市场发展历程，基金公司帝国板块等你探索。"
+	}
+	setwxshare(a,"万得基金，荣誉出品",location.href.split('#')[0],"http://www.windmoney.com.cn/GuessWeb/Page/Coupon/img/windfundlogo.png");	
+})
+
+$(window).resize(function(){
+   //process here
+});
+
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="../js/wxshare.js"></script>
+<script>
+</script>
+<script>
+	var jwxScript=document.createElement("script");
+	var wxsScript=document.createElement("script");
+	jwxScript.src= location.protocol + "//res.wx.qq.com/open/js/jweixin-1.0.0.js";	
+	wxsScript.src="../js/wxshare.js";
+	$("head").append(jwxScript).append(wxsScript);
+	setTimeout(function(){
+		setwxshare("万得公募基金速递：快速掌握基金市场核心数据","基金市场核心数据一览，包括基金业绩表现，基金市场规模走势，基金公司规模排名，基金发行阶段统计...",location.href.split('#')[0],"http://wx.wind.com.cn/WealthManagement/FDV/images/wind_logo.jpg");			
+	},2000)
+</script>

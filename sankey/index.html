@@ -1,0 +1,63 @@
+<html lang="utf-8">
+<head>
+    <meta charset="UTF-8">
+    <title>桑基流向图</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+    <link rel="stylesheet" media="(min-width: 1000px)" href="css/myChart.css" />
+	<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="js/wxshare.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/createPersonalChart.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="overflow:scroll;>
+	<div id="mainContainer" style="position:absolute;width:100%;">
+		<div id="aaa" style="display: flex;display: -webkit-flex;justify-content: center;align-items: center;">
+			<div class="rightContainer" style="width:100%;height: 100%;float: left;">
+				<div id="myChart" style="position:relative;width:100%;min-height:100%;">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+function getUrlParam(name, url) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //构造一个含有目标参数的正则表达式对象
+    var param = "";
+    if (!url)
+        param = window.location.search.substr(1);
+    else {
+        var index = url.indexOf("?");
+        var param = url;
+        if (index >= 0 && index < url.length) {
+            param = url.substr(ur.indexOf("?") + 1);
+        }
+    }
+    var r = param.match(reg);  //匹配目标参数
+    if (r != null) return r[2]; return null; //返回参数值
+}
+
+$(document).ready(function(){
+	if(getUrlParam('fundname')){
+		MyChart.createSankeyChart(getUrlParam('fundname'));
+	}else{
+		MyChart.createSankeyChart('');
+	}	
+	var a='';
+	if(decodeURI(getUrlParam('fundname')))
+	{
+		a = "遍历"+decodeURI(getUrlParam('fundname'))+"旗下基金经理的来龙去脉！"
+	}else{
+		a = "遍历国泰基金旗下基金经理的来龙去脉！"
+	}
+	setwxshare(a,"万得基金，荣誉出品",location.href.split('#')[0],"http://www.windmoney.com.cn/GuessWeb/Page/Coupon/img/windfundlogo.png");	
+})
+
+$(window).resize(function(){});
+window.addEventListener("orientationchange",function(){  
+	window.location.reload();
+});
+
+</script>
